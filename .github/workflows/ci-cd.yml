@@ -23,14 +23,12 @@ jobs:
     - name: Build and Test Backend
       run: |
         cd backend
-        chmod +x mvnw
-        ./mvnw clean test
+        mvn clean test
         
     - name: Build and Test Review Service
       run: |
         cd review-service
-        chmod +x mvnw
-        ./mvnw clean test
+        mvn clean test
 
   docker-build:
     needs: build-and-test
