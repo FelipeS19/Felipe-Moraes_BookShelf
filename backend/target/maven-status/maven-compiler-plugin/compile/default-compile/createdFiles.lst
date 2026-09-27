@@ -1,0 +1,15 @@
+com\library\backend\catalog\client\ReviewClient.class
+com\library\backend\catalog\repository\BookRepository.class
+com\library\backend\circulation\domain\Member.class
+com\library\backend\circulation\service\LoanService.class
+com\library\backend\catalog\service\BookService.class
+com\library\BackendApplication.class
+com\library\backend\circulation\repository\LoanRepository.class
+com\library\backend\circulation\service\MemberService.class
+com\library\backend\catalog\domain\Book.class
+com\library\backend\circulation\controller\MemberController.class
+com\library\backend\circulation\repository\MemberRepository.class
+com\library\backend\catalog\controller\BookController.class
+com\library\backend\circulation\controller\LoanController.class
+com\library\backend\circulation\domain\Loan.class
+com\library\backend\catalog\controller\BookReviewController.class

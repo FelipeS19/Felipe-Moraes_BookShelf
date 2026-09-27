@@ -1,0 +1,15 @@
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\client\ReviewClient.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\controller\BookController.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\controller\BookReviewController.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\domain\Book.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\repository\BookRepository.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\catalog\service\BookService.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\controller\LoanController.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\controller\MemberController.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\domain\Loan.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\domain\Member.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\repository\LoanRepository.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\repository\MemberRepository.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\service\LoanService.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\service\MemberService.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\BackendApplication.java

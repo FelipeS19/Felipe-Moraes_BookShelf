@@ -1,0 +1,3 @@
+com\library\backend\circulation\repository\LoanRepositoryTest.class
+com\library\BackendApplicationTests.class
+com\library\backend\catalog\repository\BookRepositoryTest.class
