@@ -3,6 +3,7 @@ com\library\backend\catalog\repository\BookRepository.class
 com\library\backend\circulation\domain\Member.class
 com\library\backend\circulation\service\LoanService.class
 com\library\backend\catalog\service\BookService.class
+com\library\backend\config\RabbitMQConfig.class
 com\library\BackendApplication.class
 com\library\backend\circulation\repository\LoanRepository.class
 com\library\backend\circulation\service\MemberService.class

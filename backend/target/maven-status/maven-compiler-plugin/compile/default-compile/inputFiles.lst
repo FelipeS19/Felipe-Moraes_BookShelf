@@ -12,4 +12,5 @@ C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\bac
 C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\repository\MemberRepository.java
 C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\service\LoanService.java
 C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\circulation\service\MemberService.java
+C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\backend\config\RabbitMQConfig.java
 C:\Users\sodre\Downloads\PB\library-system\backend\src\main\java\com\library\BackendApplication.java

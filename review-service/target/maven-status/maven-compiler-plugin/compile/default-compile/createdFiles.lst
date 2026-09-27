@@ -1,4 +1,6 @@
+com\library\review\listener\ReviewMessageListener.class
 com\library\review\controller\ReviewController.class
 com\library\review\repository\ReviewRepository.class
+com\library\review\config\RabbitMQConfig.class
 com\library\review\ReviewApplication.class
 com\library\review\domain\Review.class

@@ -120,9 +120,18 @@
                     comment: formData.get('comment'),
                     memberId: parseInt(formData.get('memberId'))
                 };
-                await axios.post(`/api/books/${bookId}/reviews`, review);
-                loadReviews(bookId);
-                e.target.reset();
+                try {
+                    await axios.post(`/api/books/${bookId}/reviews`, review);
+                    alert("Sua avaliação foi enviada com sucesso e está sendo processada de forma assíncrona!");
+                    e.target.reset();
+                    // Como é assíncrono (RabbitMQ), esperamos um pouquinho para o review-service processar antes de recarregar
+                    setTimeout(() => {
+                        loadReviews(bookId);
+                    }, 800);
+                } catch (err) {
+                    console.error("Erro ao enviar avaliação:", err);
+                    alert("Erro ao conectar com o serviço.");
+                }
             };
 
             return (
