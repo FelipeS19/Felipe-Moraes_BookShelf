@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@SuppressWarnings("null")
 public class LoanService {
     private final LoanRepository loanRepository;
     private final BookRepository bookRepository;

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@SuppressWarnings("null")
 public class RabbitMQConfig {
     public static final String EXCHANGE_NAME = "library.exchange";
     public static final String QUEUE_NAME = "review.create.queue";
