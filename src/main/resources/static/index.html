@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [books, setBooks] = useState([]);
+            const [members, setMembers] = useState([]);
+            const [loans, setLoans] = useState([]);
+            const [activeTab, setActiveTab] = useState('books');
+
+            useEffect(() => {
+                fetchData();
+            }, []);
+
+            const fetchData = async () => {
+                try {
+                    const booksRes = await axios.get('/api/books');
+                    setBooks(booksRes.data);
+                    
+                    const membersRes = await axios.get('/api/members');
+                    setMembers(membersRes.data);
+                    
+                    const loansRes = await axios.get('/api/loans');
+                    setLoans(loansRes.data);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            };
+
+            const handleCreateBook = async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const book = {
+                    title: formData.get('title'),
+                    author: formData.get('author'),
+                    isbn: formData.get('isbn')
+                };
+                await axios.post('/api/books', book);
+                fetchData();
+                e.target.reset();
+            };
+
+            const handleCreateMember = async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const member = {
+                    name: formData.get('name'),
+                    email: formData.get('email')
+                };
+                await axios.post('/api/members', member);
+                fetchData();
+                e.target.reset();
+            };
+
+            const handleCreateLoan = async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                await axios.post(`/api/loans?bookId=${formData.get('bookId')}&memberId=${formData.get('memberId')}`);
+                fetchData();
+                e.target.reset();
+            };
+
+            const handleReturnLoan = async (id) => {
+                await axios.put(`/api/loans/${id}/return`);
+                fetchData();
+            };
+
+            return (
+                <div className="min-h-screen p-8">
+                    <header className="mb-12 text-center">
+                        <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
+                            Library System
+                        </h1>
+                        <p className="mt-4 text-slate-400">Monolithic Architecture with Spring Boot & React</p>
+                    </header>
+
+                    <div className="flex justify-center space-x-4 mb-8">
+                        {['books', 'members', 'loans'].map(tab => (
+                            <button 
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${activeTab === tab ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/50' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+                            >
+                                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+
+                    <main className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="md:col-span-1 glass-panel p-6 h-fit">
+                            <h2 className="text-2xl font-bold mb-6 text-emerald-400">Add New</h2>
+                            
+                            {activeTab === 'books' && (
+                                <form onSubmit={handleCreateBook} className="space-y-4">
+                                    <input name="title" placeholder="Title" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                                    <input name="author" placeholder="Author" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                                    <input name="isbn" placeholder="ISBN" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                                    <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded transition-colors">Add Book</button>
+                                </form>
+                            )}
+
+                            {activeTab === 'members' && (
+                                <form onSubmit={handleCreateMember} className="space-y-4">
+                                    <input name="name" placeholder="Name" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                                    <input name="email" type="email" placeholder="Email" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                                    <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded transition-colors">Add Member</button>
+                                </form>
+                            )}
+
+                            {activeTab === 'loans' && (
+                                <form onSubmit={handleCreateLoan} className="space-y-4">
+                                    <select name="bookId" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                                        <option value="">Select Book</option>
+                                        {books.map(b => <option key={b.id} value={b.id}>{b.title}</option>)}
+                                    </select>
+                                    <select name="memberId" required className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                                        <option value="">Select Member</option>
+                                        {members.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
+                                    </select>
+                                    <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded transition-colors">Issue Loan</button>
+                                </form>
+                            )}
+                        </div>
+
+                        <div className="md:col-span-2 glass-panel p-6">
+                            <h2 className="text-2xl font-bold mb-6 text-blue-400">Directory</h2>
+                            
+                            {activeTab === 'books' && (
+                                <div className="space-y-4">
+                                    {books.map(book => (
+                                        <div key={book.id} className="bg-slate-800 p-4 rounded-lg flex justify-between items-center border border-slate-700 hover:border-slate-500 transition-colors">
+                                            <div>
+                                                <h3 className="font-bold text-lg">{book.title}</h3>
+                                                <p className="text-slate-400 text-sm">{book.author} | ISBN: {book.isbn}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {books.length === 0 && <p className="text-slate-500">No books found.</p>}
+                                </div>
+                            )}
+
+                            {activeTab === 'members' && (
+                                <div className="space-y-4">
+                                    {members.map(member => (
+                                        <div key={member.id} className="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-slate-500 transition-colors">
+                                            <h3 className="font-bold text-lg">{member.name}</h3>
+                                            <p className="text-slate-400 text-sm">{member.email}</p>
+                                        </div>
+                                    ))}
+                                    {members.length === 0 && <p className="text-slate-500">No members found.</p>}
+                                </div>
+                            )}
+
+                            {activeTab === 'loans' && (
+                                <div className="space-y-4">
+                                    {loans.map(loan => {
+                                        return (
+                                            <div key={loan.id} className="bg-slate-800 p-4 rounded-lg flex justify-between items-center border border-slate-700 hover:border-slate-500 transition-colors">
+                                                <div>
+                                                    <h3 className="font-bold text-lg">{loan.book?.title || 'Unknown Book'}</h3>
+                                                    <p className="text-slate-400 text-sm">Borrowed by {loan.member?.name || 'Unknown'} on {loan.loanDate}</p>
+                                                    <span className={`inline-block mt-2 px-2 py-1 text-xs rounded-full ${loan.status === 'ACTIVE' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
+                                                        {loan.status}
+                                                    </span>
+                                                </div>
+                                                {loan.status === 'ACTIVE' && (
+                                                    <button onClick={() => handleReturnLoan(loan.id)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded text-sm font-bold transition-colors">
+                                                        Return
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                    {loans.length === 0 && <p className="text-slate-500">No loans found.</p>}
+                                </div>
+                            )}
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
